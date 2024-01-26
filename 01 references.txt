@@ -3,3 +3,6 @@ references:
 	- https://github.com/javahometech/node-app/tree/master
 	- executing this command [ aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 922040356175.dkr.ecr.us-east-1.amazonaws.com] 
 		- https://stackoverflow.com/questions/76748410/ecr-docker-login-issues-with-aws-codebuild
+	- how to build docker image FROM s3://<bucket>/dockerfile
+		- use [aws s3 cp s3://your-bucket/path/to/Dockerfile /local/path/Dockerfile]
+		- https://medium.com/all-things-devops/docker-images-and-s3-buckets-845f7cad1f3
