@@ -15,18 +15,15 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - aws s3 cp s3://cf-github-restapi-titanic/Dockerfile .
-      - mkdir app
-      - aws s3 cp s3://cf-github-restapi-titanic/app/ ./app --recursive 
+      - mkdir app                                                              # note: yes, this has to be created. because it follows the flask folder standardization structure
+      - aws s3 cp s3://cf-github-restapi-titanic/app/ ./app --recursive        # note: yes, this has to be created. because it follows the flask folder standardization structure
+      # toDo: check to see if this image already exists
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
+
       - docker push $REPOSITORY_URI:latest
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo Writing image definitions file...
-      - printf '[{"name":"titanic","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-      - cat imagedefinitions.json 
 artifacts:
-    files: imagedefinitions.json
