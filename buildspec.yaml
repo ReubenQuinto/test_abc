@@ -10,16 +10,19 @@ phases:
       - REPOSITORY_URI=922040356175.dkr.ecr.us-east-1.amazonaws.com/cf-github-restapi-titanic
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
+
+      - aws s3 cp s3://cf-github-restapi-titanic/Dockerfile .
+      - mkdir app                                                              # note: yes, this has to be created. because it follows the flask folder standardization structure
+      - aws s3 cp s3://cf-github-restapi-titanic/app/ ./app --recursive        # note: yes, this has to be created. because it follows the flask folder standardization structure
+
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - aws s3 cp s3://cf-github-restapi-titanic/Dockerfile .
-      - mkdir app                                                              # note: yes, this has to be created. because it follows the flask folder standardization structure
-      - aws s3 cp s3://cf-github-restapi-titanic/app/ ./app --recursive        # note: yes, this has to be created. because it follows the flask folder standardization structure
       # toDo: check to see if this image already exists
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - docker images
   post_build:
     commands:
       - echo Build completed on `date`
