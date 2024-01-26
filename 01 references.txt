@@ -1,3 +1,5 @@
 references:
 	- https://www.youtube.com/watch?v=3CcGtRidF9c
 	- https://github.com/javahometech/node-app/tree/master
+	- executing this command [ aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 922040356175.dkr.ecr.us-east-1.amazonaws.com] 
+		- https://stackoverflow.com/questions/76748410/ecr-docker-login-issues-with-aws-codebuild
