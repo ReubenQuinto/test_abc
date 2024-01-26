@@ -1,0 +1,3 @@
+references:
+	- https://www.youtube.com/watch?v=3CcGtRidF9c
+	- https://github.com/javahometech/node-app/tree/master
